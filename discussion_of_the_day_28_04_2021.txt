@@ -1,0 +1,193 @@
+1) DDL,DML,DQL,TCL,DCL
+-------------------------------------------------------------------------------
+2) Constraints 
+   * Column Level
+   * Table  Level
+3) Constraints
+   * Primary Key
+   * Foreign Key
+   * Not null
+   * Unique Key
+   * Check Constraint
+-------------------------------------------------------------------------------------
+4) Inner Joins
+     * Equi Join
+     * Non Equi Join
+5) Outer Joins
+     *  Left Outer Join
+     *  Right Outer Join
+     *  Full Outer Join [ Full Outer Join is not supported in mySQL
+6) Self Join 
+---------------------------------------------------------------------------------------------------------
+Joining the tables 
+   * ANSI style
+   * Theta style
+--------------------------------------------------------------------------------------------------------
+Functions: String related functions
+           Date and Time
+           Misc. functions
+-------------------------------------------------------------------------------------------------------
+Display lastname, firstcharacter of the firstname 
+
+
+
+Ravi Kumar
+Anil Sharma
+
+Kumar, R
+Sharma, A
+SELECT concat(lastname,',',substring(firstname,1,1)) NAME
+FROM customer_master;
+
+-------------------------------------------------------------------------------------
+Display all those first names which are having the middlename as null.
+
+SELECT firstname
+FROM customer_master
+WHERE middlename IS NULL;
+
+
+The below SQL statement is incorrect
+SELECT firstname
+FROM customer_master
+WHERE middlename=NULL;
+
+
+Display all those first names which are having the middlename.
+
+SELECT firstname
+FROM customer_master
+WHERE middlename IS NOT NULL;
+
+
+------------------------------------------------------------------
+LIKE
+
+Display all the firstname starting with A.
+
+SELECT firstname from 
+customer_master where firstname like 'A%';
+
+Display the first name which starts with A and followed by exactly 3 characters.
+
+SELECT firstname
+FROM 
+customer_master WHERE firstname like 'A_ _ _';
+-----------------------------------------------------------------------------------------
+We have employee master and display the firstname, lastname for the designations VP, Manager and Asst Manager.
+
+SELECT firstname,lastname
+FROM employee_master
+WHERE designation IN ('VP','Manager','Asst Manager');
+
+We have employee master and display the firstname, lastname for the designations other than VP, Manager and Asst Manager.
+
+SELECT firstname,lastname
+FROM employee_master
+WHERE designation NOT IN ('VP','Manager','Asst Manager');
+
+Scalar functions and aggregate functions.
+
+   Scalar functions are applied on a single row at a time on a column or group of columns. 
+   Example length, concat
+----------------------------------------------------------------------------------
+Aggregate functions are applied on a group of rows of a column.
+
+min() , max() etc.
+------------------------------------------------------------------------------------------
+
+Display the firstname whose dateof birth year is 1985.
+
+SELECT firstname 
+FROM customer_master
+WHERE YEAR(date_of_birth)=1985
+
+SELECT firstname
+FROM customer_master
+WHERE extract(year from date_of_birth)=1985 
+
+
+Display the firstname whose dateof birth year is after 1985.
+
+SELECT firstname
+FROM customer_master
+WHERE extract(year from date_of_birth)>1985 
+
+Display the firstname whose dateof birth year is after or 1985.
+
+SELECT firstname
+FROM customer_master
+WHERE extract(year from date_of_birth)>=1985 
+
+Display the firstname whose dateof birth year is between 1980 and 1985 ( exclusive the year 1980 and 1985)
+
+SELECT firstname
+FROM customer_master
+WHERE extract(year from date_of_birth)>1980 AND extract(year from date_of_birth)<1985
+
+Display the firstname whose dateof birth year is between 1980 and 1985 ( inclusive the year 1980 and 1985)
+
+SELECT firstname
+FROM customer_master
+WHERE extract(year from date_of_birth)>=1980 AND extract(year from date_of_birth)<=1985
+OR
+SELECT firstname
+FROM customer_master
+WHERE  extract(year from date_of_birth) BETWEEN 1980 AND 1985;
+-------------------------------------------------------------------------------------------------
+Display firstname, date Of birth month ( In characters)
+
+SELECT firstname, date_format(date_of_birth,'%M') month_name
+FROM customer_master;
+
+
+
+Display firstname, date Of birth month ( In digits)
+
+SELECT firstname, extract(month from date_of_birth)
+FROM customer_master;
+
+OR
+
+SELECT firstname,date_format(date_of_birth,'%m') 
+FROM customer_master;
+
+
+
+
+Display firstname who was born in the month of December
+
+
+CREATE TABLE emp_details(
+code VARCHAR(5) PRIMARY KEY,
+name VARCHAR(20),
+doj date);
+
+
+INSERT INTO emp_details VALUES('E0001','Ram','2019-10-21');
+
+INSERT INTO emp_details VALUES('E0002','Rajesh','1987-10-31');
+
+
+
+Display the name,doj and retirement date
+
+SELECT name,doj,date_add(doj,INTERVAL 40 YEAR)  date_of_retirement
+FROM emp_details
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
